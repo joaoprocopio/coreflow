@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"convey/internal/config"
-	"convey/internal/db"
-	propostasQueries "convey/internal/propostas/queries"
+	"convey/internal/database"
+	"convey/internal/propostas"
 	"convey/internal/server"
 	"fmt"
 	"log/slog"
@@ -33,7 +33,7 @@ func run(ctx context.Context, logger *slog.Logger) error {
 
 	cfg := config.New()
 
-	db, err := db.New(ctx, cfg)
+	db, err := database.New(ctx, cfg)
 
 	if err != nil {
 		return err
@@ -44,7 +44,7 @@ func run(ctx context.Context, logger *slog.Logger) error {
 		ctx,
 		db,
 		logger,
-		propostasQueries.New(db),
+		propostas.New(db),
 	)
 
 	grp.Go(func() error {

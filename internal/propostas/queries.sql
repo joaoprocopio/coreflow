@@ -1,36 +1,22 @@
 -- name: ListPropostas :many
-WITH paged_propostas AS (
-    SELECT *
-    FROM propostas AS p
-    WHERE
-        p.id > sqlc.arg('cursor')
-    ORDER BY p.id
-    LIMIT sqlc.arg('limit')
-)
-
-SELECT
+SELECT 
     p.id,
     p.status,
     p.name,
-    CASE
-        WHEN u.id IS NULL THEN NULL
-        ELSE json_build_object(
-            'id', u.id,
-            'email', u.email
-        )
-    END AS assignee,
-    COALESCE(json_agg(
-        json_build_object(
-            'id', pa.id,
-            'mimetype', pa.mimetype,
-            'filename', pa.filename
-        )
-    ) FILTER (WHERE pa.id IS NOT NULL), '[]') AS attachments
-FROM paged_propostas AS p
-
+    u.id AS assignee_id,
+    u.email AS assignee_email
+FROM propostas AS p
 LEFT JOIN users AS u
     ON u.id = p.assignee_id
-LEFT JOIN proposta_attachments AS pa
-    ON pa.proposta_id = p.id
+WHERE p.id > sqlc.arg('cursor')
+ORDER BY p.id ASC
+LIMIT sqlc.arg('limit');
 
-GROUP BY p.id, p.status, p.name, u.id, u.email;
+-- name: ListPropostaAttachments :many
+SELECT 
+    pa.id,
+    pa.proposta_id,
+    pa.filename,
+    pa.mimetype
+FROM proposta_attachments AS pa
+WHERE pa.proposta_id = ANY(sqlc.arg('proposta_ids')::int[]);

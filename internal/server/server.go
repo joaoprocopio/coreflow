@@ -3,14 +3,14 @@ package server
 import (
 	"context"
 	"convey/internal/config"
-	"convey/internal/db"
-	propostasQueries "convey/internal/propostas/queries"
+	"convey/internal/database"
+	"convey/internal/propostas"
 	"log/slog"
 	"net"
 	"net/http"
 )
 
-func NewServer(cfg *config.Config, ctx context.Context, db *db.DB, logger *slog.Logger, propostasQueries *propostasQueries.Queries) *http.Server {
+func NewServer(cfg *config.Config, ctx context.Context, db *database.DB, logger *slog.Logger, propostasQueries *propostas.Queries) *http.Server {
 	var mux *http.ServeMux = http.NewServeMux()
 
 	addRoutes(
