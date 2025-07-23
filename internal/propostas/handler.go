@@ -2,14 +2,21 @@ package propostas
 
 import (
 	"context"
-	"convey/internal/propostas/queries"
 	"convey/internal/server/codec"
 	"log/slog"
 	"net/http"
 	"strconv"
 )
 
-func HandleListPropostas(ctx context.Context, logger *slog.Logger, qrs *queries.Queries) http.HandlerFunc {
+type PropostaResponse struct {
+	ID          int32                 `json:"id"`
+	Status      PropostaStatus        `json:"status"`
+	Name        string                `json:"name"`
+	Assignee    *User                 `json:"assignee"`
+	Attachments []*PropostaAttachment `json:"attachments"`
+}
+
+func HandleListPropostas(ctx context.Context, logger *slog.Logger, services *Services) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		params := r.URL.Query()
 
@@ -23,7 +30,8 @@ func HandleListPropostas(ctx context.Context, logger *slog.Logger, qrs *queries.
 			limit = int32(l)
 		}
 
-		propostas, err := qrs.ListPropostas(ctx, queries.ListPropostasParams{
+		// Use the simpler method that loads everything with relations
+		propostas, err := services.ListPropostasWithAttachments(ctx, ListPropostasParams{
 			Cursor: cursor,
 			Limit:  limit,
 		})
@@ -34,7 +42,23 @@ func HandleListPropostas(ctx context.Context, logger *slog.Logger, qrs *queries.
 			return
 		}
 
-		codec.WriteEncodedJSON(w, r, http.StatusOK, propostas)
-	}
+		// Convert to response format
+		response := make([]PropostaResponse, len(propostas))
+		for i, proposta := range propostas {
+			attachments := proposta.Attachments
+			if attachments == nil {
+				attachments = []*PropostaAttachment{}
+			}
 
+			response[i] = PropostaResponse{
+				ID:          proposta.ID,
+				Status:      proposta.Status,
+				Name:        proposta.Name,
+				Assignee:    proposta.Assignee,
+				Attachments: attachments,
+			}
+		}
+
+		codec.WriteEncodedJSON(w, r, http.StatusOK, response)
+	}
 }
