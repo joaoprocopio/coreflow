@@ -10,7 +10,6 @@ const (
 	PropostaStatusBacklog PropostaStatus = "backlog"
 )
 
-// User represents a user in the system
 type User struct {
 	bun.BaseModel `bun:"table:users,alias:u"`
 
@@ -19,7 +18,6 @@ type User struct {
 	Password string `bun:"password,notnull" json:"password"`
 }
 
-// Proposta represents a proposta/proposal
 type Proposta struct {
 	bun.BaseModel `bun:"table:propostas,alias:p"`
 
@@ -28,12 +26,10 @@ type Proposta struct {
 	Name       string         `bun:"name,notnull" json:"name"`
 	AssigneeID *int32         `bun:"assignee_id" json:"assignee_id"`
 
-	// Relations
 	Assignee    *User                 `bun:"rel:belongs-to,join:assignee_id=id" json:"assignee,omitempty"`
 	Attachments []*PropostaAttachment `bun:"rel:has-many,join:id=proposta_id" json:"attachments,omitempty"`
 }
 
-// PropostaAttachment represents file attachments for propostas
 type PropostaAttachment struct {
 	bun.BaseModel `bun:"table:proposta_attachments,alias:pa"`
 
@@ -42,6 +38,5 @@ type PropostaAttachment struct {
 	Filename   string `bun:"filename,notnull" json:"filename"`
 	Mimetype   string `bun:"mimetype,notnull" json:"mimetype"`
 
-	// Relations
 	Proposta *Proposta `bun:"rel:belongs-to,join:proposta_id=id" json:"proposta,omitempty"`
 }
