@@ -9,6 +9,7 @@ import (
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
 	"github.com/uptrace/bun/driver/pgdriver"
+	"github.com/uptrace/bun/extra/bundebug"
 )
 
 type DB = bun.DB
@@ -24,6 +25,8 @@ func New(ctx context.Context, cfg *config.Config) (*DB, error) {
 
 	sqldb := sql.OpenDB(conn)
 	db := bun.NewDB(sqldb, pgdialect.New())
+
+	db.AddQueryHook(bundebug.NewQueryHook(bundebug.WithVerbose(true)))
 
 	if err := db.PingContext(ctx); err != nil {
 		return nil, err
