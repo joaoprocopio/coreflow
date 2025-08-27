@@ -2,8 +2,8 @@ package propostas
 
 import (
 	"context"
-	"convey/internal/propostas/queries"
-	"convey/internal/server/codec"
+	"coreflow/internal/propostas/queries"
+	"coreflow/internal/server/codec"
 	"log/slog"
 	"net/http"
 	"strconv"

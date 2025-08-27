@@ -2,8 +2,8 @@ package health
 
 import (
 	"context"
-	"convey/internal/db"
-	"convey/internal/server/codec"
+	"coreflow/internal/db"
+	"coreflow/internal/server/codec"
 	"log/slog"
 	"net/http"
 )

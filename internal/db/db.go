@@ -2,7 +2,7 @@ package db
 
 import (
 	"context"
-	"convey/internal/config"
+	"coreflow/internal/config"
 	"fmt"
 
 	"github.com/jackc/pgx/v5"

@@ -1,6 +1,11 @@
-module convey
+module coreflow
 
-go 1.24.5
+go 1.25.0
+
+tool (
+	github.com/pressly/goose/v3/cmd/goose
+	github.com/sqlc-dev/sqlc/cmd/sqlc
+)
 
 require (
 	github.com/jackc/pgx/v5 v5.7.5
@@ -89,9 +94,4 @@ require (
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.10.0 // indirect
 	modernc.org/sqlite v1.37.0 // indirect
-)
-
-tool (
-	github.com/pressly/goose/v3/cmd/goose
-	github.com/sqlc-dev/sqlc/cmd/sqlc
 )

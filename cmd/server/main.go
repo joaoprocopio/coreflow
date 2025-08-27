@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
-	"convey/internal/config"
-	"convey/internal/db"
-	propostasQueries "convey/internal/propostas/queries"
-	"convey/internal/server"
+	"coreflow/internal/config"
+	"coreflow/internal/db"
+	propostasQueries "coreflow/internal/propostas/queries"
+	"coreflow/internal/server"
 	"fmt"
 	"log/slog"
 	"net/http"

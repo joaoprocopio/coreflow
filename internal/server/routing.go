@@ -2,10 +2,10 @@ package server
 
 import (
 	"context"
-	"convey/internal/db"
-	"convey/internal/health"
-	"convey/internal/propostas"
-	propostasQueries "convey/internal/propostas/queries"
+	"coreflow/internal/db"
+	"coreflow/internal/health"
+	"coreflow/internal/propostas"
+	propostasQueries "coreflow/internal/propostas/queries"
 	"log/slog"
 	"net/http"
 )

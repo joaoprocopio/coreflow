@@ -2,15 +2,21 @@ package server
 
 import (
 	"context"
-	"convey/internal/config"
-	"convey/internal/db"
-	propostasQueries "convey/internal/propostas/queries"
+	"coreflow/internal/config"
+	"coreflow/internal/db"
+	propostasQueries "coreflow/internal/propostas/queries"
 	"log/slog"
 	"net"
 	"net/http"
 )
 
-func NewServer(cfg *config.Config, ctx context.Context, db *db.DB, logger *slog.Logger, propostasQueries *propostasQueries.Queries) *http.Server {
+func NewServer(
+	cfg *config.Config,
+	ctx context.Context,
+	db *db.DB,
+	logger *slog.Logger,
+	propostasQueries *propostasQueries.Queries,
+) *http.Server {
 	var mux *http.ServeMux = http.NewServeMux()
 
 	addRoutes(
