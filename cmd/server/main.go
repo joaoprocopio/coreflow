@@ -4,7 +4,7 @@ import (
 	"context"
 	"coreflow/internal/config"
 	"coreflow/internal/db"
-	propostasServices "coreflow/internal/propostas/services"
+	"coreflow/internal/propostas"
 	"coreflow/internal/server"
 	"fmt"
 	"log/slog"
@@ -44,7 +44,7 @@ func run(ctx context.Context, logger *slog.Logger) error {
 		ctx,
 		db,
 		logger,
-		propostasServices.New(db),
+		propostas.NewService(db),
 	)
 
 	grp.Go(func() error {
