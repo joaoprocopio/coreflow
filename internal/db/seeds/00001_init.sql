@@ -9,7 +9,7 @@ VALUES
     (4, 'joao@gmail.com', 'joao123');
 
 INSERT INTO
-    propostas (id, status, name, assignee_id)
+    tasks (id, status, name, assignee_id)
 VALUES
     (1, 'backlog', 'Eatopia - Garrafas e Guardanapos', 1),
     (2, 'backlog', 'Canelle - Itens variados', NULL),
@@ -17,7 +17,7 @@ VALUES
     (4, 'backlog', 'Dona Deola - Itens Variados', NULL);
 
 INSERT INTO
-    proposta_attachments (id, proposta_id, filename, mimetype)
+    tasks_attachments (id, task_id, filename, mimetype)
 VALUES
     (1, 1, 'orcamento_garrafas_2025.pdf', 'application/pdf'),
     (2, 1, 'guardanapos_personalizados.jpg', 'image/jpeg'),
@@ -32,6 +32,6 @@ VALUES
 -- +goose Down
 -- +goose StatementBegin
 DELETE FROM users WHERE id IN (1, 2, 3, 4);
-DELETE FROM propostas WHERE id IN (1, 2, 3, 4);
-DELETE FROM proposta_attachments WHERE id IN (1, 2, 3, 4, 5, 6, 7);
+DELETE FROM tasks WHERE id IN (1, 2, 3, 4);
+DELETE FROM tasks_attachments WHERE id IN (1, 2, 3, 4, 5, 6, 7);
 -- +goose StatementEnd

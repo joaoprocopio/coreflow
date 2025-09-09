@@ -6,31 +6,31 @@ CREATE TABLE users (
     password VARCHAR(128) NOT NULL
 );
 
-CREATE TYPE proposta_status AS ENUM('backlog');
+CREATE TYPE task_status AS ENUM('backlog');
 
-CREATE TABLE propostas (
+CREATE TABLE tasks (
     id SERIAL PRIMARY KEY,
-    status proposta_status NOT NULL,
+    status task_status NOT NULL,
     name VARCHAR(255) NOT NULL,
     assignee_id INTEGER NULL,
 
     FOREIGN KEY (assignee_id) REFERENCES users (id) ON DELETE SET NULL
 );
 
-CREATE TABLE proposta_attachments (
+CREATE TABLE tasks_attachments (
     id SERIAL PRIMARY KEY,
-    proposta_id INTEGER NOT NULL,
+    task_id INTEGER NOT NULL,
     filename VARCHAR(255) NOT NULL,
     mimetype VARCHAR(255) NOT NULl,
 
-    FOREIGN KEY (proposta_id) REFERENCES propostas (id) ON DELETE CASCADE
+    FOREIGN KEY (task_id) REFERENCES tasks (id) ON DELETE CASCADE
 );
 -- +goose StatementEnd
 
 -- +goose Down
 -- +goose StatementBegin
 DROP TABLE users;
-DROP TABLE proposta_attachments;
-DROP TABLE propostas;
-DROP TYPE proposta_status;
+DROP TABLE tasks_attachments;
+DROP TABLE tasks;
+DROP TYPE task_status;
 -- +goose StatementEnd

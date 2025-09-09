@@ -4,7 +4,7 @@ import (
 	"context"
 	"coreflow/internal/config"
 	"coreflow/internal/db"
-	"coreflow/internal/propostas"
+	"coreflow/internal/tasks"
 	"log/slog"
 	"net"
 	"net/http"
@@ -15,7 +15,7 @@ func NewServer(
 	ctx context.Context,
 	db *db.DB,
 	logger *slog.Logger,
-	propostasSvc *propostas.Services,
+	tasksSvc *tasks.Services,
 ) *http.Server {
 	var mux *http.ServeMux = http.NewServeMux()
 
@@ -23,7 +23,7 @@ func NewServer(
 		mux,
 		logger,
 		db,
-		propostasSvc,
+		tasksSvc,
 	)
 
 	var handler http.Handler = mux

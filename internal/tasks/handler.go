@@ -1,4 +1,4 @@
-package propostas
+package tasks
 
 import (
 	"coreflow/internal/server/codec"
@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func HandleListPropostas(logger *slog.Logger, svc *Services) http.HandlerFunc {
+func HandleListTasksV1(logger *slog.Logger, svc *Services) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		params := r.URL.Query()
 
@@ -21,14 +21,14 @@ func HandleListPropostas(logger *slog.Logger, svc *Services) http.HandlerFunc {
 			limit = int32(l)
 		}
 
-		propostas, err := svc.ListPropostas(r.Context(), cursor, limit)
+		tasks, err := svc.ListTasks(r.Context(), cursor, limit)
 
 		if err != nil {
-			logger.Error("failed to list propostas", slog.String("error", err.Error()))
-			http.Error(w, "failed to list propostas", http.StatusInternalServerError)
+			logger.Error("failed to list tasks", slog.String("error", err.Error()))
+			http.Error(w, "failed to list tasks", http.StatusInternalServerError)
 			return
 		}
 
-		codec.WriteEncodedJSON(w, r, http.StatusOK, propostas)
+		codec.WriteEncodedJSON(w, r, http.StatusOK, tasks)
 	}
 }

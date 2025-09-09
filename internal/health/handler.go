@@ -7,12 +7,13 @@ import (
 	"net/http"
 )
 
+type Health struct {
+	Server   string `json:"server"`
+	Database string `json:"database"`
+}
+
 func HandleHealth(logger *slog.Logger, db *db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		type health struct {
-			Server   string `json:"server"`
-			Database string `json:"database"`
-		}
 
 		var err error
 
@@ -24,7 +25,7 @@ func HandleHealth(logger *slog.Logger, db *db.DB) http.HandlerFunc {
 			return
 		}
 
-		err = codec.WriteEncodedJSON(w, r, http.StatusOK, health{
+		err = codec.WriteEncodedJSON(w, r, http.StatusOK, Health{
 			Server:   "ok",
 			Database: "ok",
 		})
