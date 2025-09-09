@@ -4,6 +4,7 @@ import (
 	"context"
 	"coreflow/internal/config"
 	"coreflow/internal/db"
+	"coreflow/internal/server/middleware"
 	"coreflow/internal/tasks"
 	"log/slog"
 	"net"
@@ -28,7 +29,7 @@ func NewServer(
 
 	var handler http.Handler = mux
 
-	handler = loggerMiddleware(handler, logger)
+	handler = middleware.LoggerMiddleware(handler, logger)
 
 	var srv *http.Server = &http.Server{
 		ErrorLog: slog.NewLogLogger(logger.Handler(), slog.LevelError),

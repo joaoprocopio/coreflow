@@ -1,4 +1,4 @@
-package server
+package middleware
 
 import (
 	"log/slog"
@@ -6,9 +6,7 @@ import (
 	"time"
 )
 
-type Middleware func(h http.Handler) http.Handler
-
-func loggerMiddleware(h http.Handler, logger *slog.Logger) http.HandlerFunc {
+func LoggerMiddleware(h http.Handler, logger *slog.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 		h.ServeHTTP(w, r)
