@@ -2,14 +2,14 @@ package propostas
 
 import (
 	"context"
-	"coreflow/internal/propostas/queries"
+	"coreflow/internal/propostas/services"
 	"coreflow/internal/server/codec"
 	"log/slog"
 	"net/http"
 	"strconv"
 )
 
-func HandleListPropostas(ctx context.Context, logger *slog.Logger, qrs *queries.Queries) http.HandlerFunc {
+func HandleListPropostas(ctx context.Context, logger *slog.Logger, qrs *services.Services) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		params := r.URL.Query()
 
@@ -23,10 +23,7 @@ func HandleListPropostas(ctx context.Context, logger *slog.Logger, qrs *queries.
 			limit = int32(l)
 		}
 
-		propostas, err := qrs.ListPropostas(ctx, queries.ListPropostasParams{
-			Cursor: cursor,
-			Limit:  limit,
-		})
+		propostas, err := qrs.ListPropostas(ctx, cursor, limit)
 
 		if err != nil {
 			logger.Error("failed to list propostas", slog.String("error", err.Error()))
