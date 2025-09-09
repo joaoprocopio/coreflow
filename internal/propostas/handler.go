@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func HandleListPropostas(ctx context.Context, logger *slog.Logger, svc *Service) http.HandlerFunc {
+func HandleListPropostas(ctx context.Context, logger *slog.Logger, svc *Services) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		params := r.URL.Query()
 

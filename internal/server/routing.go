@@ -14,8 +14,8 @@ func addRoutes(
 	ctx context.Context,
 	logger *slog.Logger,
 	db *db.DB,
-	propostasServices *propostas.Service,
+	propostasSvc *propostas.Services,
 ) {
 	mux.Handle("GET /health", health.HandleHealth(ctx, logger, db))
-	mux.Handle("GET /propostas", propostas.HandleListPropostas(ctx, logger, propostasServices))
+	mux.Handle("GET /propostas", propostas.HandleListPropostas(ctx, logger, propostasSvc))
 }

@@ -15,7 +15,7 @@ func NewServer(
 	ctx context.Context,
 	db *db.DB,
 	logger *slog.Logger,
-	propostasServices *propostas.Service,
+	propostasSvc *propostas.Services,
 ) *http.Server {
 	var mux *http.ServeMux = http.NewServeMux()
 
@@ -24,7 +24,7 @@ func NewServer(
 		ctx,
 		logger,
 		db,
-		propostasServices,
+		propostasSvc,
 	)
 
 	var handler http.Handler = mux

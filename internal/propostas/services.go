@@ -10,11 +10,11 @@ import (
 	"github.com/go-jet/jet/v2/postgres"
 )
 
-func NewService(db *db.DB) *Service {
-	return &Service{db: db}
+func NewServices(db *db.DB) *Services {
+	return &Services{db: db}
 }
 
-type Service struct {
+type Services struct {
 	db *db.DB
 }
 
@@ -40,7 +40,7 @@ type PropostaWithRelations struct {
 	Attachments []PropostaAttachment `json:"attachments"`
 }
 
-func (s *Service) ListPropostas(ctx context.Context, cursor int32, limit int32) ([]PropostaWithRelations, error) {
+func (s *Services) ListPropostas(ctx context.Context, cursor int32, limit int32) ([]PropostaWithRelations, error) {
 	// Create aliases for tables to avoid conflicts
 	p := table.Propostas.AS("p")
 	u := table.Users.AS("u")

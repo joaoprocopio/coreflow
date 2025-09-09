@@ -44,7 +44,7 @@ func run(ctx context.Context, logger *slog.Logger) error {
 		ctx,
 		db,
 		logger,
-		propostas.NewService(db),
+		propostas.NewServices(db),
 	)
 
 	grp.Go(func() error {
