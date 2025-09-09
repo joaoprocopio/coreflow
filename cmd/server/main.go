@@ -75,7 +75,7 @@ func run(ctx context.Context, logger *slog.Logger) error {
 	grp.Go(func() error {
 		<-ctx.Done()
 
-		_, cancel := context.WithTimeout(ctx, 10*time.Second)
+		_, cancel := context.WithTimeout(ctx, 15*time.Second)
 		defer cancel()
 
 		logger.Info("gracefully disconnecting from database")

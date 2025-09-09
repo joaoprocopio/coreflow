@@ -1,14 +1,13 @@
 package health
 
 import (
-	"context"
 	"coreflow/internal/db"
 	"coreflow/internal/server/codec"
 	"log/slog"
 	"net/http"
 )
 
-func HandleHealth(ctx context.Context, logger *slog.Logger, db *db.DB) http.HandlerFunc {
+func HandleHealth(logger *slog.Logger, db *db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		type health struct {
 			Server   string `json:"server"`
@@ -17,7 +16,7 @@ func HandleHealth(ctx context.Context, logger *slog.Logger, db *db.DB) http.Hand
 
 		var err error
 
-		err = db.Ping(ctx)
+		err = db.Ping(r.Context())
 
 		if err != nil {
 			logger.Error("database is not reachable", slog.String("error", err.Error()))

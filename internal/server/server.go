@@ -21,7 +21,6 @@ func NewServer(
 
 	addRoutes(
 		mux,
-		ctx,
 		logger,
 		db,
 		propostasSvc,
@@ -35,6 +34,9 @@ func NewServer(
 		ErrorLog: slog.NewLogLogger(logger.Handler(), slog.LevelError),
 		Addr:     net.JoinHostPort(cfg.SrvHost, cfg.SrvPort),
 		Handler:  handler,
+		BaseContext: func(listener net.Listener) context.Context {
+			return ctx
+		},
 	}
 
 	return srv
